@@ -16,7 +16,7 @@
     "observe": "node scripts/collect.mts"
   },
   "dependencies": {
-    "nuxt": "4.6.0",
+    "nuxt": "4.6.2",
     "vue": "3.5.43"
   },
   "devDependencies": {
