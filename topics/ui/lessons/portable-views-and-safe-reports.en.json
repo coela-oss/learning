@@ -1,0 +1,68 @@
+{
+  "id": "portable-views-and-safe-reports",
+  "domain": "ui",
+  "language": "en",
+  "status": "research",
+  "revision": 1,
+  "translatedFrom": null,
+  "title": "Export portable view state and render reports as text",
+  "summary": "Keep diagram data independent from DOM references and HTML presentation.",
+  "objectives": [
+    "Preserve supported graph and viewport fields in a synthetic round trip.",
+    "Render untrusted report content without treating it as HTML."
+  ],
+  "prerequisites": [
+    "Basic programming and data records"
+  ],
+  "related": [
+    "measured-layout"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "Text rendering and textContent",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent",
+      "basis": "Distinguishes text content from interpreted markup; the exercise is restricted to text-node output."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Choose an explicit export contract",
+      "paragraphs": [
+        "A synthetic view contains node IDs, optional parent IDs, edges and a viewport. Export data rather than browser elements or application secrets.",
+        "A real importer must validate supported fields, identifiers, sizes and nesting. A JSON round trip alone is not an importer or compatibility promise."
+      ]
+    },
+    {
+      "title": "Separate editing, theme and reporting evidence",
+      "paragraphs": [
+        "A label editor needs selection, cancel and keyboard/focus tests; palette similarity alone does not establish accessible light and dark states.",
+        "The exercise escapes report text for an HTML text node. PDF output, URL attributes, styles, rich HTML and complete report automation need different contracts and tests."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the selected-knowledge exercises with pnpm test.",
+    "expected": "Assert the documented result and its negative boundary; no external operation is performed.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "The round trip is synthetic data only. Text-node escaping is not a general HTML sanitizer, accessibility audit, graph editor or PDF implementation."
+  ]
+}

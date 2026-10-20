@@ -1,0 +1,71 @@
+{
+  "revision": 1,
+  "translatedFrom": null,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "Dependency or API change",
+    "Security advisory or broken source link",
+    "Failed exercise or changed expected outcome"
+  ],
+  "related": [
+    "local-transactions",
+    "suggestions-and-evidence"
+  ],
+  "id": "verifiable-claims",
+  "domain": "engineering",
+  "language": "en",
+  "status": "current-practice",
+  "title": "Write claims that a reader can verify",
+  "summary": "Describe the problem, one usable path, evidence and remaining limits.",
+  "objectives": [
+    "Report implementation and test evidence at their actual scope.",
+    "Distinguish an unexecuted integration from a passing unit test."
+  ],
+  "prerequisites": [
+    "A small software project",
+    "Basic tests and documentation"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "evidence reporting revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Rust Book: test organization",
+      "url": "https://doc.rust-lang.org/book/ch11-03-test-organization.html",
+      "basis": "Unit and integration tests serve different scopes. The lesson applies that distinction to honest documentation, without claiming a Rust runtime was tested."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Start with a concrete reader task",
+      "paragraphs": [
+        "Explain the problem and intended user, then show one reproducible usage path, responsibilities and constraints. Label implemented, experimental and absent behavior.",
+        "Keep English and Japanese explanations on separate pages. Preserve upstream authorship and do not invent personal adoption dates or outcomes."
+      ]
+    },
+    {
+      "title": "Tie each result to its evidence",
+      "paragraphs": [
+        "The synthetic report has a passed unit result and a not-run integration result. It must report the integration as unverified. A merged PR is not proof of production behavior.",
+        "Record commands, environment and bounds. Preserve useful failed experiments as history, without presenting old configurations as current recommendations."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the evidence-reporting example with not-run and failed integration results.",
+    "expected": "Neither result is promoted to integration passed by a passing unit test.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "This is an editorial exercise, not certification of every repository or its deployed service.",
+    "Published claims require review of evidence, scope and permission to disclose."
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "revision": 1,
+  "translatedFrom": 1,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "依存やAPIの変更",
+    "セキュリティ勧告・出典リンクの破損",
+    "演習の失敗・期待結果の変更"
+  ],
+  "related": [
+    "local-transactions"
+  ],
+  "id": "observed-state",
+  "domain": "network",
+  "language": "ja",
+  "status": "historical",
+  "title": "要求と観測された結果を分ける",
+  "summary": "過去の対話設計の実験から再利用可能な状態の考え方を学びます。",
+  "objectives": [
+    "要求・観測・結果不明を区別する。",
+    "timeoutを成功として扱わない。"
+  ],
+  "prerequisites": [
+    "要求と非同期イベント",
+    "状態遷移の基礎"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "synthetic state machine revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "MDN Fetch guidance",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "basis": "Fetchの応答とHTTP statusは明示的な確認が必要です。応答だけで外部操作の完了を保証しません。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "意図と観測の分離",
+      "paragraphs": [
+        "過去の設計では、参加操作と実際の参加を区別していました。旧サービス構成や設定を復活させず、その違いを引き継ぎます。",
+        "合成例では要求でoutsideからpendingへ、観測でpresentへ、timeoutでunknownへ遷移します。"
+      ]
+    },
+    {
+      "title": "再試行の前に照合する",
+      "paragraphs": [
+        "unknownは結果が未確認であることを表します。再要求が安全か決める前に、現在の状態を観測します。",
+        "認証・権限・重複防止・イベント順序は別の契約です。この演習はチャットサービスや安全な実行基盤を実装しません。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "timeoutと再照合を含む状態遷移の演習を実行してください。",
+    "expected": "要求はpending、timeoutはunknown、観測イベントで初めてpresentになります。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "過去の設計を教材化した合成例です。旧連携は実行していません。",
+    "provider API・認証情報・顧客データ・非公開議論は含めません。"
+  ]
+}

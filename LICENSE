@@ -1,0 +1,21 @@
+# License scope
+
+Original educational prose, explanations, synthetic educational examples and
+curriculum documentation: Creative Commons Attribution 4.0 International
+(CC-BY-4.0), unless specifically marked otherwise. Copyright 2026 Coela.
+Attribution: Coela Learning, source page URL, license link and indication of
+changes. Canonical terms: https://creativecommons.org/licenses/by/4.0/
+Full legal terms: LICENSES/CC-BY-4.0.txt.
+
+Original application, build, collection and test code, including reusable code
+snippets in lessons: MIT. Full terms: LICENSES/MIT.txt.
+This code exception permits reuse independently of the educational prose.
+
+Third-party quotations, dependency patches and upstream materials retain their
+own rights and notices. Citations do not relicense referenced material.
+Trademarks and logos are not granted by these copyright licenses.
+This notice covers this candidate only, not excluded private preservation
+materials or the parent repository and its inherited history.
+
+For dependency patch attribution and selected upstream terms, see
+THIRD_PARTY_NOTICES.md and third-party/patches.json.

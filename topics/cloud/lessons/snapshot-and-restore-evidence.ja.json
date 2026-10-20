@@ -1,0 +1,69 @@
+{
+  "id": "snapshot-and-restore-evidence",
+  "domain": "cloud",
+  "language": "ja",
+  "status": "current-practice",
+  "revision": 1,
+  "translatedFrom": 1,
+  "title": "snapshotを復元して確認する",
+  "summary": "ローカルDBのcommit、snapshotの作成、別に開いて読める復元を区別します。",
+  "objectives": [
+    "隔離したSQLite backupを別接続で確認する。",
+    "復元した版を示し、自動的に最新版だと扱わない。"
+  ],
+  "prerequisites": [
+    "プログラミングとデータレコードの基礎"
+  ],
+  "related": [
+    "local-transactions",
+    "record-and-content-identity"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "SQLite Online Backup API",
+      "url": "https://www.sqlite.org/backup.html",
+      "basis": "Explains database snapshots through the backup interface; destination contents and revision are independently checked here."
+    }
+  ],
+  "sections": [
+    {
+      "title": "ツールの導入は復旧の証拠ではない",
+      "paragraphs": [
+        "DBのbackup APIで合成snapshotを作り、保存先を別に開いてレコードを読みます。稼働中のDBファイルをコピーしてWALも含まれると推測しません。",
+        "クラウドのファイルシステム、ローカルトランザクション、cache、backup先は別の機能です。遠隔ストレージを暗黙にDB正本へ変更しません。"
+      ]
+    },
+    {
+      "title": "何を復元したかを明示する",
+      "paragraphs": [
+        "snapshot後に元DBを更新しても、別に開いたsnapshotは以前の版です。その版を明示します。",
+        "製品の復旧では添付・暗号化と鍵の回復・中断したupload・破損・保持期間・復元演習を別に検証します。providerの停止をローカル記録の消失とは扱いません。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "pnpm testで選別知見の合成演習を実行します。",
+    "expected": "記載した結果と拒否境界を確認します。外部操作は行いません。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "一時的なローカルSQLiteだけの試験です。電源断・暗号化bundle・外部保存・複製・製品復旧は未検証です。"
+  ]
+}

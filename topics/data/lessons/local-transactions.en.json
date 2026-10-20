@@ -1,0 +1,70 @@
+{
+  "revision": 1,
+  "translatedFrom": null,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "Dependency or API change",
+    "Security advisory or broken source link",
+    "Failed exercise or changed expected outcome"
+  ],
+  "related": [
+    "observed-state"
+  ],
+  "id": "local-transactions",
+  "domain": "data",
+  "language": "en",
+  "status": "current-practice",
+  "title": "Commit local records before rebuilding derived views",
+  "summary": "Use transaction boundaries to distinguish durable source records from replaceable projections.",
+  "objectives": [
+    "Verify rollback leaves no partial business record.",
+    "Separate a committed record from a derived graph view."
+  ],
+  "prerequisites": [
+    "SQL INSERT and SELECT",
+    "Stable record identifiers"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x node:sqlite",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SQLite transactions",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "basis": "BEGIN, COMMIT and ROLLBACK define the transaction boundary; error handling must decide when to roll back."
+    }
+  ],
+  "sections": [
+    {
+      "title": "A local transaction has one outcome",
+      "paragraphs": [
+        "Write a synthetic record and its projection job in one transaction. A deliberate failure before commit must leave neither row present.",
+        "Commit success concerns local SQLite state. It does not establish that a graph projection, remote copy or backup completed."
+      ]
+    },
+    {
+      "title": "Derived views can be behind",
+      "paragraphs": [
+        "A committed record may have a pending projection. Expose that state and rebuild from the canonical record instead of silently pretending both stores committed together.",
+        "Use an isolated temporary database for exercises. Product migrations, encrypted backup and power-loss recovery require their own acceptance."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the in-memory SQLite exercise. Force a transaction failure, then run a successful transaction.",
+    "expected": "Rollback leaves zero records and zero jobs. Commit leaves one record and one pending job.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "The test verifies SQLite transaction behavior in memory, not power-loss durability or an actual Graph adapter.",
+    "The pattern is educational; product schemas and authorization remain with their owners."
+  ]
+}

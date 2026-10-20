@@ -1,0 +1,8 @@
+packages:
+  - .
+overrides:
+  '@nuxt/devtools>simple-git': 4.0.2
+patchedDependencies:
+  braces@3.0.3: patches/braces@3.0.3.patch
+  node-forge@1.4.0: patches/node-forge@1.4.0.patch
+onlyBuiltDependencies: []

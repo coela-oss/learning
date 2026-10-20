@@ -1,0 +1,70 @@
+{
+  "revision": 1,
+  "translatedFrom": null,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "Dependency or API change",
+    "Security advisory or broken source link",
+    "Failed exercise or changed expected outcome"
+  ],
+  "related": [
+    "observed-state"
+  ],
+  "id": "authorization-boundaries",
+  "domain": "security",
+  "language": "en",
+  "status": "current-practice",
+  "title": "Identity, transport and authority are different boundaries",
+  "summary": "Make each destination, operation and scope explicit before forwarding an event.",
+  "objectives": [
+    "Separate authentication from authorization.",
+    "Reject a correct identity acting outside its grant."
+  ],
+  "prerequisites": [
+    "HTTP requests and asynchronous messages",
+    "Scopes and trust boundaries"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "authorization exercise revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "OAuth 2.0 security best current practice",
+      "url": "https://www.rfc-editor.org/rfc/rfc9700.html",
+      "basis": "IETF OAuth guidance informs the separation of grants and resource access. This toy scope check is not an OAuth implementation."
+    }
+  ],
+  "sections": [
+    {
+      "title": "A bridge is not an authority",
+      "paragraphs": [
+        "A transport can carry an event without permission to use it in another workspace. Authenticate the caller, then check destination scope and allowed action independently.",
+        "A token or successful login is not proof that every operation is allowed. Keep provider-specific credentials outside records and examples."
+      ]
+    },
+    {
+      "title": "Check before forwarding",
+      "paragraphs": [
+        "The synthetic grant permits read in workspace A until time 20. Write, workspace B and time 20 are rejected. The test does not contact a provider.",
+        "A production adapter also validates the intended audience, rejects replay and handles revocation. Verify these controls independently of transport and successful login."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the scope exercise with a wrong workspace, wrong action, expired grant and permitted read.",
+    "expected": "Only an in-scope read before expiry succeeds.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "Synthetic comparison only; OAuth, Matrix and provider integrations are not implemented here.",
+    "Validate the complete authentication and authorization flow separately before operational use."
+  ]
+}

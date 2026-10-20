@@ -1,0 +1,4 @@
+# Patch context whitespace is syntax; retain the validated upstream patch bytes.
+patches/*.patch -whitespace
+# Upstream license texts are retained verbatim, including trailing blank lines.
+LICENSES/*.txt -whitespace

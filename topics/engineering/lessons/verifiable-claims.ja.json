@@ -1,0 +1,71 @@
+{
+  "revision": 1,
+  "translatedFrom": 1,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "出典・API・版の変更",
+    "勧告や演習結果の変更",
+    "根拠の見直し期限"
+  ],
+  "related": [
+    "local-transactions",
+    "suggestions-and-evidence"
+  ],
+  "id": "verifiable-claims",
+  "domain": "engineering",
+  "language": "ja",
+  "status": "current-practice",
+  "title": "読者が確認できる説明を書く",
+  "summary": "課題・利用手順・根拠・未検証範囲を示します。",
+  "objectives": [
+    "実装と試験の根拠を実際の範囲で報告する。",
+    "未実行の統合試験と成功した単体試験を区別する。"
+  ],
+  "prerequisites": [
+    "小さな開発経験",
+    "テストと文書の基礎"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "evidence reporting revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Rust Book: test organization",
+      "url": "https://doc.rust-lang.org/book/ch11-03-test-organization.html",
+      "basis": "公式資料の範囲を参照した独自の教育用要約です。合成例の成功は製品連携・認証・実運用の受入を意味しません。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "読者の具体的な作業から説明する",
+      "paragraphs": [
+        "課題と対象者を示し、再現可能な利用手順・責務・制約を説明します。実装済み・試作・未実装を区別します。",
+        "日英は別ページにし、上流の帰属を維持します。本人の技術採用日や成果を作りません。"
+      ]
+    },
+    {
+      "title": "結果と根拠を対応させる",
+      "paragraphs": [
+        "単体試験が成功でも統合試験が未実行なら、統合は未検証です。PRのmergeも本番動作の証拠ではありません。",
+        "コマンド・環境・限界を記録します。参考になる失敗は歴史として残し、旧設定を現行推奨として扱いません。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "統合が未実行・失敗のケースを合成例で確認してください。",
+    "expected": "単体試験の成功で統合成功へ昇格させません。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "文章化の演習であり、全repoや配備済みサービスの認証ではありません。",
+    "公開する主張は、根拠・適用範囲・開示の許可を確認する必要があります。"
+  ]
+}

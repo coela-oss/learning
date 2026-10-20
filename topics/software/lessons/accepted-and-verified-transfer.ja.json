@@ -1,0 +1,69 @@
+{
+  "id": "accepted-and-verified-transfer",
+  "domain": "software",
+  "language": "ja",
+  "status": "research",
+  "revision": 1,
+  "translatedFrom": 1,
+  "title": "転送の受付と確認済みの完了を分ける",
+  "summary": "受付応答と、意図した宛先の内容を確認した証拠は異なります。",
+  "objectives": [
+    "pending・unknown・verifiedを区別する。",
+    "結果不明を盲目的な再送へ置き換えない。"
+  ],
+  "prerequisites": [
+    "プログラミングとデータレコードの基礎"
+  ],
+  "related": [
+    "observed-state",
+    "authorization-boundaries"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "HTTP Semantics: idempotent methods",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "basis": "Defines idempotency and limits on automatic retry; this toy model does not implement HTTP semantics."
+    }
+  ],
+  "sections": [
+    {
+      "title": "不確実な結果を残す",
+      "paragraphs": [
+        "合成要求をpendingで開始します。受付応答は要求の受理を表し、意図したbytesの到着を証明しません。",
+        "timeout後はunknownを維持し、再送が安全かを判断する前に宛先を照合します。冪等キーには操作とpayloadの範囲が必要です。"
+      ]
+    },
+    {
+      "title": "意図した結果を確認する",
+      "paragraphs": [
+        "この合成モデルでは、期待する内容に束縛された宛先の観測だけがverifiedへ進めます。digestが違えば未確認のままです。",
+        "実adapterでは期限・キャンセル・権限範囲・安全なエラー処理も必要です。remote-controlサーバーを起動するだけでは製品の保証になりません。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "pnpm testで選別知見の合成演習を実行します。",
+    "expected": "記載した結果と拒否境界を確認します。外部操作は行いません。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "通信・資格情報・外部サービスは使いません。合成状態モデルは実配送や本番の冪等性の実装ではありません。"
+  ]
+}

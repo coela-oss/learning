@@ -1,0 +1,70 @@
+{
+  "revision": 1,
+  "translatedFrom": 1,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "依存やAPIの変更",
+    "セキュリティ勧告・出典リンクの破損",
+    "演習の失敗・期待結果の変更"
+  ],
+  "related": [
+    "observed-state"
+  ],
+  "id": "local-transactions",
+  "domain": "data",
+  "language": "ja",
+  "status": "current-practice",
+  "title": "ローカル記録を確定してから派生ビューを再構築する",
+  "summary": "正本レコードと再構築可能な投影をトランザクション境界で区別します。",
+  "objectives": [
+    "失敗時に部分的な業務レコードが残らないことを確認する。",
+    "確定した記録と派生グラフを分離する。"
+  ],
+  "prerequisites": [
+    "SQLのINSERTとSELECT",
+    "安定したレコードID"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x node:sqlite",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "sources": [
+    {
+      "title": "SQLite transactions",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "basis": "BEGIN・COMMIT・ROLLBACKでトランザクション境界を定義します。エラー時にはrollbackの要否を明示的に判断します。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "ローカル更新を一つの結果にする",
+      "paragraphs": [
+        "合成レコードと投影ジョブを同じトランザクションに書き込み、commit前の意図的な失敗で両方が消えることを確認します。",
+        "SQLiteのcommit成功は、グラフ投影・遠隔コピー・バックアップの完了を意味しません。"
+      ]
+    },
+    {
+      "title": "派生ビューには遅延がある",
+      "paragraphs": [
+        "正本が確定していても投影はpendingになり得ます。両方が同時に確定したように見せず、正本から再構築します。",
+        "演習は隔離した一時DBで行います。製品の移行・暗号化バックアップ・電源断復旧には別の受入が必要です。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "SQLite演習で失敗する更新と成功する更新を順に実行してください。",
+    "expected": "rollback後は記録とジョブが0件。commit後は記録1件とpendingジョブ1件です。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "メモリー内SQLiteの確認であり、電源断耐性やGraph adapterは未検証です。",
+    "教育用パターンです。製品schemaと認可は製品ownerが管理します。"
+  ]
+}

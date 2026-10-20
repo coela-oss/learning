@@ -1,0 +1,68 @@
+{
+  "id": "portable-views-and-safe-reports",
+  "domain": "ui",
+  "language": "ja",
+  "status": "research",
+  "revision": 1,
+  "translatedFrom": 1,
+  "title": "持ち運べる表示データと安全なレポートを分ける",
+  "summary": "図のデータをDOM参照やHTML表示から独立させます。",
+  "objectives": [
+    "合成例のgraphとviewportを往復で維持する。",
+    "レポートの入力をHTMLとして解釈せずに表示する。"
+  ],
+  "prerequisites": [
+    "プログラミングとデータレコードの基礎"
+  ],
+  "related": [
+    "measured-layout"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "Text rendering and textContent",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent",
+      "basis": "Distinguishes text content from interpreted markup; the exercise is restricted to text-node output."
+    }
+  ],
+  "sections": [
+    {
+      "title": "出力契約を明示する",
+      "paragraphs": [
+        "合成viewはnode ID・任意の親ID・edge・viewportを持ちます。ブラウザーの要素やアプリの秘密ではなくデータを出力します。",
+        "実importerでは対応項目・ID・サイズ・入れ子を検証します。JSONの往復だけでimporterや互換性を完成扱いにしません。"
+      ]
+    },
+    {
+      "title": "編集・テーマ・帳票の証拠を分ける",
+      "paragraphs": [
+        "label編集には選択・キャンセル・keyboard/focusの試験が必要です。色値が似ているだけで明暗両テーマのアクセシビリティは確認できません。",
+        "演習はHTMLのtext node向けにレポート文字列をescapeします。PDF、URL属性、style、rich HTML、帳票自動化は別の契約と試験が必要です。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "pnpm testで選別知見の合成演習を実行します。",
+    "expected": "記載した結果と拒否境界を確認します。外部操作は行いません。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "合成データの往復です。text node向けescapeは汎用HTML sanitizer・アクセシビリティ監査・graph editor・PDF実装ではありません。"
+  ]
+}

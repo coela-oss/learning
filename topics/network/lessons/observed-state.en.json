@@ -1,0 +1,70 @@
+{
+  "revision": 1,
+  "translatedFrom": null,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "Dependency or API change",
+    "Security advisory or broken source link",
+    "Failed exercise or changed expected outcome"
+  ],
+  "related": [
+    "local-transactions"
+  ],
+  "id": "observed-state",
+  "domain": "network",
+  "language": "en",
+  "status": "historical",
+  "title": "A request is not an observed outcome",
+  "summary": "Extract a reusable state lesson from earlier interaction-design experiments.",
+  "objectives": [
+    "Distinguish requested, observed and unknown outcomes.",
+    "Avoid promoting a timeout to a successful operation."
+  ],
+  "prerequisites": [
+    "Requests and asynchronous events",
+    "Basic state transitions"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "synthetic state machine revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "MDN Fetch guidance",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "basis": "Fetch responses and HTTP status need explicit checking. This does not prove that an external operation completed."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Separate intent from observation",
+      "paragraphs": [
+        "An earlier interaction-design experiment distinguished selecting Join from observing participation. Preserve that distinction without restoring its service topology or old configuration.",
+        "In a synthetic model, request changes outside to pending; an observed acknowledgement changes pending to present. A timeout changes pending to unknown."
+      ]
+    },
+    {
+      "title": "Reconcile before retrying",
+      "paragraphs": [
+        "Unknown means the outcome has not been established. Observe current state before deciding whether another request is safe.",
+        "Authentication, permission, duplicate prevention and event ordering need separate contracts. This exercise does not implement a chat provider or a secure execution service."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the requested-versus-observed state exercise, including timeout and reconciliation.",
+    "expected": "Request is pending; timeout is unknown; only an observed event establishes present.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "Historical design lesson with a new synthetic exercise; no legacy integration was executed.",
+    "Provider APIs, credentials, customer data and private source discussions are excluded."
+  ]
+}

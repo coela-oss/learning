@@ -1,0 +1,68 @@
+{
+  "revision": 1,
+  "translatedFrom": null,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "Dependency or API change",
+    "Security advisory or broken source link",
+    "Failed exercise or changed expected outcome"
+  ],
+  "related": [],
+  "id": "measured-layout",
+  "domain": "ui",
+  "language": "en",
+  "status": "research",
+  "title": "Measure before laying out nested nodes",
+  "summary": "Separate graph identity, layout and DOM measurement.",
+  "objectives": [
+    "Keep parent identity separate from measured size.",
+    "Explain why delayed measurement needs an explicit state."
+  ],
+  "prerequisites": [
+    "Component lifecycle and local state",
+    "Cartesian coordinates"
+  ],
+  "applicability": [
+    {
+      "name": "Vue",
+      "range": "3.5.x concepts",
+      "verifiedVersion": "3.5.43"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Vue lifecycle hooks",
+      "url": "https://vuejs.org/api/composition-api-lifecycle",
+      "basis": "DOM effects belong after mounting; dispose subscriptions on unmount. The exercise is a pure layout model, not a browser integration."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Identity is available before dimensions",
+      "paragraphs": [
+        "A child can refer to a stable parent ID before the browser measures the parent. Do not invent a width when the parent is missing or unmeasured.",
+        "Keep the graph record independent of DOM references. A renderer can report dimensions later without changing graph identity."
+      ]
+    },
+    {
+      "title": "Deterministic layout and cleanup",
+      "paragraphs": [
+        "For two synthetic children with heights 20 and 30, place them at y=0 and y=28 with an 8-unit gap. Recomputing should produce the same result.",
+        "A real component must also test resize, removal, SSR and unmount cleanup. This lesson does not establish that a particular graph module implements those cases."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the measured-layout exercise for missing dimensions, two children and repeated computation.",
+    "expected": "Missing measurement produces pending; measured children have positions 0 and 28; input state stays unchanged.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "Pure TypeScript exercise only; no graph editor or DOM integration is tested here.",
+    "Research guidance; not a claim that a released module supports these requirements."
+  ]
+}

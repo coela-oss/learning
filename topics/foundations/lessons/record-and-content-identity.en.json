@@ -1,0 +1,68 @@
+{
+  "id": "record-and-content-identity",
+  "domain": "foundations",
+  "language": "en",
+  "status": "current-practice",
+  "revision": 1,
+  "translatedFrom": null,
+  "title": "Separate record identity from content identity",
+  "summary": "Use a stable record identifier and an explicit revision; a digest identifies bytes, not permission or durability.",
+  "objectives": [
+    "Distinguish application identity, revision and content digest.",
+    "Recognize that serialization is part of a digest contract."
+  ],
+  "prerequisites": [
+    "Basic programming and data records"
+  ],
+  "related": [
+    "local-transactions"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "JSON Canonicalization Scheme",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.html",
+      "basis": "Describes invariant serialization for reproducible digest/signature inputs; the exercise is not a JCS implementation."
+    }
+  ],
+  "sections": [
+    {
+      "title": "The same record can have different content",
+      "paragraphs": [
+        "A synthetic record keeps its identifier while its revision and body change. A digest of the old body does not identify the new bytes.",
+        "Hash comparison alone establishes neither storage durability nor permission to read or publish the record."
+      ]
+    },
+    {
+      "title": "Specify the representation",
+      "paragraphs": [
+        "JSON objects with different property order can serialize to different bytes. Use a specified representation when a protocol needs canonical identity; do not invent a cryptographic encoding from this exercise.",
+        "Missing linked content is an explicit missing result, not an empty record or invented content."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the selected-knowledge exercises with pnpm test.",
+    "expected": "Assert the documented result and its negative boundary; no external operation is performed.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "The exercise compares fixed UTF-8 strings with the platform hash implementation. It does not implement JCS, a content-addressed store or a permission system."
+  ]
+}

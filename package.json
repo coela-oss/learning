@@ -1,0 +1,28 @@
+{
+  "name": "@coela/learning-site",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.29.3",
+  "engines": {
+    "node": ">=24.15.0 <25"
+  },
+  "scripts": {
+    "content": "node --experimental-strip-types scripts/prepare.mts",
+    "test": "node --test tests/*.test.mts",
+    "typecheck": "pnpm content && tsc -p tsconfig.tools.json && nuxt typecheck",
+    "generate": "pnpm content && nuxt generate && node scripts/check-output.mts",
+    "dev": "pnpm content && nuxt dev --host 127.0.0.1",
+    "review": "node scripts/review.mts",
+    "observe": "node scripts/collect.mts"
+  },
+  "dependencies": {
+    "nuxt": "4.6.0",
+    "vue": "3.5.43"
+  },
+  "devDependencies": {
+    "@types/node": "24.12.0",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.2.8"
+  },
+  "license": "MIT"
+}

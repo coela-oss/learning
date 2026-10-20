@@ -1,0 +1,69 @@
+{
+  "id": "snapshot-and-restore-evidence",
+  "domain": "cloud",
+  "language": "en",
+  "status": "current-practice",
+  "revision": 1,
+  "translatedFrom": null,
+  "title": "Verify a snapshot by restoring it",
+  "summary": "Distinguish a committed local database, a copied snapshot and an independently readable restore.",
+  "objectives": [
+    "Check an isolated SQLite backup by reopening its destination.",
+    "Report the restored revision instead of claiming it is automatically current."
+  ],
+  "prerequisites": [
+    "Basic programming and data records"
+  ],
+  "related": [
+    "local-transactions",
+    "record-and-content-identity"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "SQLite Online Backup API",
+      "url": "https://www.sqlite.org/backup.html",
+      "basis": "Explains database snapshots through the backup interface; destination contents and revision are independently checked here."
+    }
+  ],
+  "sections": [
+    {
+      "title": "A tool installation is not recovery evidence",
+      "paragraphs": [
+        "Use the database backup API to create a synthetic snapshot, then open the destination separately and read its record. Do not copy a live database file and assume its WAL is included.",
+        "A cloud-backed filesystem, a local transaction, a cache and a backup destination are different capabilities. Remote storage must not silently become the canonical database."
+      ]
+    },
+    {
+      "title": "State exactly what was restored",
+      "paragraphs": [
+        "After making the snapshot, change the source revision. The reopened snapshot still contains its earlier revision; label that revision explicitly.",
+        "Production recovery must separately cover attachments, encryption and key recovery, interrupted uploads, corruption, retention and a restore drill. An unavailable provider does not mean local records were erased."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the selected-knowledge exercises with pnpm test.",
+    "expected": "Assert the documented result and its negative boundary; no external operation is performed.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "Uses a temporary local SQLite database only. It does not test power loss, encrypted bundles, external storage, replication or production recovery."
+  ]
+}

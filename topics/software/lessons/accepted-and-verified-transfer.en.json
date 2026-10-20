@@ -1,0 +1,69 @@
+{
+  "id": "accepted-and-verified-transfer",
+  "domain": "software",
+  "language": "en",
+  "status": "research",
+  "revision": 1,
+  "translatedFrom": null,
+  "title": "Separate transfer acceptance from verified completion",
+  "summary": "A request acknowledgement and a matching destination observation are different evidence.",
+  "objectives": [
+    "Represent pending, unknown and verified outcomes separately.",
+    "Avoid turning an uncertain result into a blind retry."
+  ],
+  "prerequisites": [
+    "Basic programming and data records"
+  ],
+  "related": [
+    "observed-state",
+    "authorization-boundaries"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "HTTP Semantics: idempotent methods",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "basis": "Defines idempotency and limits on automatic retry; this toy model does not implement HTTP semantics."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Keep uncertainty visible",
+      "paragraphs": [
+        "A synthetic request starts pending. An acknowledgement records acceptance; it does not prove that the intended bytes reached the destination.",
+        "After a timeout, preserve unknown and reconcile the destination before deciding whether retry is safe. An idempotency key is scoped to the operation and payload."
+      ]
+    },
+    {
+      "title": "Verify the intended result",
+      "paragraphs": [
+        "Only a destination observation bound to the intended content can mark this toy transfer verified. A wrong digest leaves it unverified.",
+        "Real adapters also need bounded time, cancellation, scope checks and sanitized errors. Enabling a remote-control server does not supply those product guarantees."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the selected-knowledge exercises with pnpm test.",
+    "expected": "Assert the documented result and its negative boundary; no external operation is performed.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "No network, credentials or remote service are used. The toy model is not a reliable delivery protocol or a production idempotency implementation."
+  ]
+}

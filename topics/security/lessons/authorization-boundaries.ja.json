@@ -1,0 +1,70 @@
+{
+  "revision": 1,
+  "translatedFrom": 1,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "出典・API・版の変更",
+    "勧告や演習結果の変更",
+    "根拠の見直し期限"
+  ],
+  "related": [
+    "observed-state"
+  ],
+  "id": "authorization-boundaries",
+  "domain": "security",
+  "language": "ja",
+  "status": "current-practice",
+  "title": "認証・通信・操作権限の境界を分ける",
+  "summary": "転送前に宛先・操作・対象範囲を明示します。",
+  "objectives": [
+    "認証と認可を分離する。",
+    "正しい利用者でも許可範囲外の操作を拒否する。"
+  ],
+  "prerequisites": [
+    "HTTP要求と非同期メッセージ",
+    "scopeと信頼境界"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "authorization exercise revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "OAuth 2.0 security best current practice",
+      "url": "https://www.rfc-editor.org/rfc/rfc9700.html",
+      "basis": "公式資料の範囲を参照した独自の教育用要約です。合成例の成功は製品連携・認証・実運用の受入を意味しません。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "通信経路は操作権限ではない",
+      "paragraphs": [
+        "イベントを運べることと、別workspaceで使えることは異なります。呼出者を認証した後、宛先と操作の許可を別に確認します。",
+        "ログイン成功やtokenの所持だけで全操作を許可しません。providerの認証情報はレコードや教材へ含めません。"
+      ]
+    },
+    {
+      "title": "転送前に確認する",
+      "paragraphs": [
+        "合成grantはworkspace Aのreadを時刻20未満まで許可します。write・workspace B・時刻20は拒否します。providerへは接続しません。",
+        "実adapterでは宛先の検証・再実行防止・失効の扱いも必要です。通信やログインの成功とは別に、これらの制御を検証します。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "別workspace・別操作・期限切れ・許可範囲内readの合成例を実行してください。",
+    "expected": "期限内かつ許可範囲内のreadだけ成功します。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "合成比較のみ。OAuth・Matrix・provider連携の実装ではありません。",
+    "実運用前に、認証から認可までの経路全体を別途検証する必要があります。"
+  ]
+}

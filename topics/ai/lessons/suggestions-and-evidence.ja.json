@@ -1,0 +1,71 @@
+{
+  "revision": 1,
+  "translatedFrom": 1,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "出典・API・版の変更",
+    "勧告や演習結果の変更",
+    "根拠の見直し期限"
+  ],
+  "related": [
+    "observed-state",
+    "authorization-boundaries"
+  ],
+  "id": "suggestions-and-evidence",
+  "domain": "ai",
+  "language": "ja",
+  "status": "research",
+  "title": "AIの提案を根拠や操作権限と分ける",
+  "summary": "提案の出典と未解決の条件を維持します。",
+  "objectives": [
+    "推測した情報の不確実性を明示する。",
+    "提案・人の決定・実行許可を区別する。"
+  ],
+  "prerequisites": [
+    "出典レコードと参照",
+    "事実・解釈・仮説"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "interpretation exercise revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "basis": "公式資料の範囲を参照した独自の教育用要約です。合成例の成功は製品連携・認証・実運用の受入を意味しません。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "出典が示す範囲を守る",
+      "paragraphs": [
+        "架空のメッセージが金曜日のレビューを依頼しています。timezoneと日付が不明なら期限は未確定とし、時刻を作りません。",
+        "モデルが提案した要約・分類・次の行動は提案のままです。自然な回答でも観測済み事実にはしません。"
+      ]
+    },
+    {
+      "title": "次の境界を明示する",
+      "paragraphs": [
+        "合成例はai-suggestionとdeadline=nullを維持し、実行grantを持ちません。返信も添付の取得も行いません。",
+        "外部AIへデータを送る前に、宛先・目的・保持条件・権限を確認します。メッセージの記録は最小限とし、提案と実行権限を分けます。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "合成例で期限未解決とgrantなしを確認してください。",
+    "expected": "AI提案のまま、期限と実行権限を作りません。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "モデル呼出しはありません。分類器や自律agentの受入ではありません。",
+    "業務記録と意思決定レビューには、それぞれの正本とアクセス方針が必要です。"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "record-and-content-identity",
+  "domain": "foundations",
+  "language": "ja",
+  "status": "current-practice",
+  "revision": 1,
+  "translatedFrom": 1,
+  "title": "レコードの識別子と内容の識別子を分ける",
+  "summary": "安定したレコードIDと版を持たせ、内容のdigestを権限や保存保証と区別します。",
+  "objectives": [
+    "アプリのID・版・内容digestを区別する。",
+    "digestの契約には直列化の規則も必要だと説明する。"
+  ],
+  "prerequisites": [
+    "プログラミングとデータレコードの基礎"
+  ],
+  "related": [
+    "local-transactions"
+  ],
+  "applicability": [
+    {
+      "name": "Node.js",
+      "range": "24.x; synthetic exercise revision 1",
+      "verifiedVersion": "24.15.0"
+    }
+  ],
+  "verifiedAt": "2026-10-20",
+  "evidence": "synthetic-test",
+  "reviewer": "Development exercise review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-20",
+  "reviewTriggers": [
+    "Dependency/API or source change",
+    "Security advisory",
+    "Failed exercise or changed outcome"
+  ],
+  "sources": [
+    {
+      "title": "JSON Canonicalization Scheme",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.html",
+      "basis": "Describes invariant serialization for reproducible digest/signature inputs; the exercise is not a JCS implementation."
+    }
+  ],
+  "sections": [
+    {
+      "title": "同じレコードでも内容は変わる",
+      "paragraphs": [
+        "合成レコードのIDを維持したまま版と本文を更新します。旧本文のdigestは新しいbytesを示しません。",
+        "hashの比較だけでは保存の耐久性や、参照・公開する権限は確認できません。"
+      ]
+    },
+    {
+      "title": "表現を明示する",
+      "paragraphs": [
+        "JSONのキー順が違うと直列化結果も異なり得ます。正規化が必要なプロトコルでは仕様を選び、この演習から独自の暗号化表現を作りません。",
+        "参照先の内容がなければ欠落として扱い、空レコードや内容を作って補いません。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "pnpm testで選別知見の合成演習を実行します。",
+    "expected": "記載した結果と拒否境界を確認します。外部操作は行いません。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "固定UTF-8文字列と標準hash実装による演習です。JCS・内容指向ストア・認可の実装ではありません。"
+  ]
+}

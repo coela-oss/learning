@@ -1,0 +1,68 @@
+{
+  "revision": 1,
+  "translatedFrom": 1,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "依存やAPIの変更",
+    "セキュリティ勧告・出典リンクの破損",
+    "演習の失敗・期待結果の変更"
+  ],
+  "related": [],
+  "id": "measured-layout",
+  "domain": "ui",
+  "language": "ja",
+  "status": "research",
+  "title": "入れ子ノードは計測してから配置する",
+  "summary": "グラフの識別子・配置・DOM計測を分けて考えます。",
+  "objectives": [
+    "親の識別子と計測された寸法を区別する。",
+    "計測待ちを明示する理由を説明する。"
+  ],
+  "prerequisites": [
+    "コンポーネントのライフサイクルと状態",
+    "座標の基礎"
+  ],
+  "applicability": [
+    {
+      "name": "Vue",
+      "range": "3.5.x concepts",
+      "verifiedVersion": "3.5.43"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Vue lifecycle hooks",
+      "url": "https://vuejs.org/api/composition-api-lifecycle",
+      "basis": "DOM操作はmount後に行い、購読はunmount時に解放します。この演習は純粋な配置モデルであり、ブラウザー統合の試験ではありません。"
+    }
+  ],
+  "sections": [
+    {
+      "title": "識別子と寸法の取得時期は異なる",
+      "paragraphs": [
+        "親IDを参照できても、ブラウザーによる寸法計測は未完了の場合があります。親や寸法が不明なときに幅を捏造しません。",
+        "グラフのレコードとDOM参照を分離し、描画側から寸法を後で受け取ります。"
+      ]
+    },
+    {
+      "title": "再計算と後始末",
+      "paragraphs": [
+        "高さ20と30の子を間隔8で配置すると、y座標は0と28です。再計算で同じ結果になることを確認します。",
+        "実コンポーネントのリサイズ・削除・SSR・購読解放は別の試験です。この教材はグラフモジュールの動作保証ではありません。"
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "未計測・2つの子・再計算の合成例を実行してください。",
+    "expected": "未計測はpending、計測後は0と28に配置し、入力は変更しません。",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "純粋なTypeScriptの合成例のみ。DOMやエディター統合は未検証です。",
+    "研究段階の教材であり、公開モジュールの対応済み機能を示しません。"
+  ]
+}

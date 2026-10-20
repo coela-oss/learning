@@ -1,0 +1,71 @@
+{
+  "revision": 1,
+  "translatedFrom": null,
+  "verifiedAt": "2026-10-16",
+  "evidence": "synthetic-test",
+  "reviewer": "Codex development review",
+  "reviewStatus": "reviewed",
+  "reviewDue": "2027-01-16",
+  "reviewTriggers": [
+    "Dependency or API change",
+    "Security advisory or broken source link",
+    "Failed exercise or changed expected outcome"
+  ],
+  "related": [
+    "observed-state",
+    "authorization-boundaries"
+  ],
+  "id": "suggestions-and-evidence",
+  "domain": "ai",
+  "language": "en",
+  "status": "research",
+  "title": "Keep an AI suggestion separate from evidence and permission",
+  "summary": "Preserve the source and unresolved details when a model proposes an action.",
+  "objectives": [
+    "Keep inferred details visibly uncertain.",
+    "Distinguish a proposed action from a human decision or execution grant."
+  ],
+  "prerequisites": [
+    "Source records and references",
+    "Facts, interpretations and hypotheses"
+  ],
+  "applicability": [
+    {
+      "name": "Model",
+      "range": "interpretation exercise revision 1",
+      "verifiedVersion": "1"
+    }
+  ],
+  "sources": [
+    {
+      "title": "NIST AI Risk Management Framework",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "basis": "Risk management and evaluation require context and evidence. This lesson does not claim conformity assessment or certify an AI system."
+    }
+  ],
+  "sections": [
+    {
+      "title": "Retain what the source actually says",
+      "paragraphs": [
+        "A fictional message requests a review by Friday. Without a timezone and calendar date, keep the deadline unresolved. Retain a reference to the synthetic source rather than inventing a timestamp.",
+        "A summary, category or next action proposed by a model is still a proposal. A plausible answer does not become an observed fact."
+      ]
+    },
+    {
+      "title": "Make the next boundary explicit",
+      "paragraphs": [
+        "The exercise retains kind=ai-suggestion and deadline=null and provides no execution grant. It cannot send a reply or fetch an attachment.",
+        "Before sending data to a model, review the destination, purpose, retention and authority. Minimize message logging and keep suggestions separate from execution permissions."
+      ]
+    }
+  ],
+  "exercise": {
+    "instruction": "Run the synthetic interpretation example and inspect the unresolved deadline and missing grant.",
+    "expected": "The proposal remains an AI suggestion with no deadline and no execution authority.",
+    "command": "pnpm test"
+  },
+  "limitations": [
+    "No model is called; no classifier, autonomous agent or decision engine is accepted by this example.",
+    "Business records and decision reviews require separate ownership and access policies."
+  ]
+}
