@@ -42,3 +42,11 @@ private Git history are part of this candidate.
 
 [Third-party patch notices](THIRD_PARTY_NOTICES.md) retain exact upstream licenses,
 local modification descriptions and integrity-bound provenance.
+
+## Manual source review
+
+[Observation policy and operator commands](docs/source-observation-policy.md)
+define runtime, elapsed/heap/request/storage limits, evidence retention,
+explicit cleanup, editorial ownership and disabled notifications. `pnpm observe`
+keeps per-run sealed evidence locally; `pnpm observe:status` reports capacity.
+Source collection does not approve a lesson or select a new baseline.

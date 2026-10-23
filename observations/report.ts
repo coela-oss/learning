@@ -6,6 +6,7 @@ export interface ReviewItem { id: string; sourceId: string; lessonIds: string[];
 export function report(lessons: Lesson[], observations: Observation[], baseline: unknown, now: Date) {
   const urls = new Set(lessons.flatMap(l => l.sources.map(s => s.url)))
   const before = snapshot(baseline, urls)
+  if (before.observedAt > now.toISOString().slice(0, 10)) throw Error('Baseline is in the future')
   const seen = new Set<string>(), items: ReviewItem[] = []
   const normalized = observations.map(value => {
     if (!urls.has(value.url) || seen.has(value.url)) throw Error('Unknown or duplicate observation')

@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto'
 import { approvedUrl, publicAddress } from './network-policy.ts'
-import type { Dependencies, Observation, Policy, SourceTarget } from './types.ts'
+import { SourceFailure, type Dependencies, type Observation, type Policy, type SourceTarget } from './types.ts'
 export async function readSource(target: SourceTarget, deps: Dependencies, policy: Policy,
   signal: AbortSignal): Promise<Pick<Observation, 'digest' | 'httpStatus' | 'lastModified'>> {
   let next = target.url
@@ -13,20 +13,20 @@ export async function readSource(target: SourceTarget, deps: Dependencies, polic
     try {
       if ([301, 302, 303, 307, 308].includes(reply.status)) {
         next = new URL(reply.headers.location ?? '', url).href
-        if (!target.allowed.includes(next) || redirects === policy.redirects) throw Error('redirect-blocked')
+        if (!target.allowed.includes(next) || redirects === policy.redirects) throw new SourceFailure('redirect-blocked', reply.status)
         continue
       }
-      if (reply.status !== 200) throw Error('unavailable')
+      if (reply.status !== 200) throw new SourceFailure('unavailable', reply.status)
       if (!/^(text\/(html|plain)|application\/json)(;|$)/i.test(reply.headers['content-type'] ?? '')
-        || !['', 'identity'].includes(reply.headers['content-encoding'] ?? '')) throw Error('unsupported')
+        || !['', 'identity'].includes(reply.headers['content-encoding'] ?? '')) throw new SourceFailure('unsupported', reply.status)
       const length = reply.headers['content-length'] ?? ''
-      if (length && (!/^\d+$/.test(length) || Number(length) > policy.maxBytes)) throw Error('too-large')
+      if (length && (!/^\d+$/.test(length) || Number(length) > policy.maxBytes)) throw new SourceFailure('too-large', reply.status)
       let size = 0
       const hash = createHash('sha256')
       for await (const chunk of reply.body) {
-        if (!(chunk instanceof Uint8Array)) throw Error('unsupported')
+        if (!(chunk instanceof Uint8Array)) throw new SourceFailure('unsupported', reply.status)
         signal.throwIfAborted(); size += chunk.byteLength
-        if (size > policy.maxBytes) throw Error('too-large')
+        if (size > policy.maxBytes) throw new SourceFailure('too-large', reply.status)
         hash.update(chunk)
       }
       const modified = Date.parse(reply.headers['last-modified'] ?? '')
