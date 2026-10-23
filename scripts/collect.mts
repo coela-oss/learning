@@ -12,13 +12,14 @@ try {
   execFileSync('git', ['diff', '--exit-code', 'HEAD', '--'], { cwd: root, timeout: 3000, maxBuffer: 16384, stdio: 'pipe' })
   if (!/^[a-f0-9]{40}$/.test(source)) throw Error('Invalid source')
   phase = 'worker'
-  const result = await new Promise<{ code: number; stdout: string }>(resolve => {
+  const result = await new Promise<{ code: number; stdout: string; stderr: string }>(resolve => {
     execFile(process.execPath, ['--max-old-space-size=128', fileURLToPath(new URL('./collect-worker.mts', import.meta.url)), ...args],
       { cwd: root, encoding: 'utf8', timeout: 120000, killSignal: 'SIGKILL', maxBuffer: 16384,
-        env: { LANG: 'C.UTF-8', LEARNING_SOURCE_SHA: source } }, (error, stdout) => resolve({ code: error ? 2 : 0, stdout }))
+        env: { LANG: 'C.UTF-8', LEARNING_SOURCE_SHA: source } }, (error, stdout, stderr) => resolve({ code: error ? 2 : 0, stdout, stderr }))
   })
-  if (!result.stdout.trim()) throw Error('Worker stopped without a completed receipt')
-  const summary: unknown = JSON.parse(result.stdout)
+  const output = result.stdout.trim() || result.stderr.trim()
+  if (!output) throw Error('Worker stopped without a completed receipt')
+  const summary: unknown = JSON.parse(output)
   console.log(JSON.stringify(result.code ? { state: 'worker_failed_inspect_run', summary, remoteWrites: false } : summary))
   process.exitCode = result.code
 } catch (error) {
