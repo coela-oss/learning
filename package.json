@@ -1,10 +1,11 @@
 {
   "name": "@coela/learning-site",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.29.3",
   "engines": {
-    "node": ">=24.15.0 <25"
+    "node": ">=24.22.1 <25"
   },
   "scripts": {
     "content": "node --experimental-strip-types scripts/prepare.mts",
@@ -13,7 +14,9 @@
     "generate": "pnpm content && nuxt generate && node scripts/check-output.mts",
     "dev": "pnpm content && nuxt dev --host 127.0.0.1",
     "review": "node scripts/review.mts",
-    "observe": "node scripts/collect.mts"
+    "observe": "node scripts/collect.mts",
+    "observe:status": "node scripts/observation-state.mts status",
+    "observe:remove": "node scripts/observation-state.mts remove"
   },
   "dependencies": {
     "nuxt": "4.6.2",

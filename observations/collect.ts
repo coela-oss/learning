@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readSource } from './read.ts'
 import { approvedUrl, validatePolicy } from './network-policy.ts'
-import { defaultPolicy, type Dependencies, type Observation, type Outcome, type Policy, type SourceTarget } from './types.ts'
+import { SourceFailure, defaultPolicy, type Dependencies, type Observation, type Outcome, type Policy, type SourceTarget } from './types.ts'
 const failures = new Set<Outcome>(['unavailable', 'timeout', 'too-large', 'redirect-blocked', 'unsupported', 'network-blocked'])
 async function one(target: SourceTarget, deps: Dependencies, policy: Policy): Promise<Observation> {
   const base = { sourceId: target.id, url: target.url, checkedAt: deps.now().toISOString() }
@@ -15,8 +15,9 @@ async function one(target: SourceTarget, deps: Dependencies, policy: Policy): Pr
     } catch (error) {
       const message = error instanceof Error ? error.message : ''
       const status: Outcome = controller.signal.aborted ? 'timeout' : failures.has(message as Outcome) ? message as Outcome : 'unavailable'
-      if (attempt < policy.retries && status === 'unavailable') continue
-      return { ...base, status, digest: null, httpStatus: null, lastModified: null }
+      const httpStatus = error instanceof SourceFailure ? error.httpStatus : null
+      if (attempt < policy.retries && status === 'unavailable' && (httpStatus === null || httpStatus >= 500)) continue
+      return { ...base, status, digest: null, httpStatus, lastModified: null }
     } finally { if (timer) clearTimeout(timer); controller.abort() }
   }
   throw Error('Attempt limit')

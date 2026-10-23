@@ -19,3 +19,10 @@ export interface Observation {
 }
 export interface Policy { timeoutMs: number; maxBytes: number; concurrency: number; retries: number; redirects: number }
 export const defaultPolicy: Policy = { timeoutMs: 5000, maxBytes: 524288, concurrency: 2, retries: 1, redirects: 2 }
+
+export class SourceFailure extends Error {
+  readonly httpStatus: number
+  constructor(code: Outcome, httpStatus: number) {
+    super(code); this.name = 'SourceFailure'; this.httpStatus = httpStatus
+  }
+}

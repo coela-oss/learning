@@ -18,3 +18,11 @@
 
 [第三者パッチの表示](THIRD_PARTY_NOTICES.md)に、上流LICENSE原文、変更内容、
 配布物integrityとhashで束縛した出典を保存しています。
+
+## 公式資料の手動観測
+
+[観測の運用方針](docs/source-observation-policy.md)で実行者、時間・メモリ・通信・
+保存上限、保持／削除、編集レビュー、通知を送らない運用を定めています。
+`pnpm observe` は実取得を行い、記録をローカルへ保存します。
+`pnpm observe:status` で容量と記録IDを確認できます。教材や確認日、比較用baselineは
+自動で承認・更新しません。

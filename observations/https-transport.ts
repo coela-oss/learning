@@ -11,7 +11,7 @@ export const officialTransport: Dependencies = {
     return new Promise((resolve, reject) => {
       const req = request(url, {
         method: 'GET', agent: false, signal, family: address.family,
-        headers: { accept: 'text/html, text/plain, application/json', 'accept-encoding': 'identity', 'user-agent': 'private-learning-source-review/1' },
+        headers: { accept: 'text/html, text/plain, application/json', 'accept-encoding': 'identity', 'user-agent': 'coela-learning-source-review/1' },
         // Pin the validated DNS result. TLS still verifies the original hostname.
         lookup: (_hostname, _options, callback) => callback(null, address.address, address.family)
       }, response => resolve({
