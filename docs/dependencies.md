@@ -1,24 +1,27 @@
 # Dependency mitigations
 
-The npm audit database reports High advisories for the underlying braces 3.0.3
-and node-forge 1.4.0 versions. This candidate carries reviewed source patches;
-do not describe the dependency graph as advisory-free or dismiss those alerts.
+The Learning owner uses public `@nuxtjp/dependency-security@0.2.0` for installed
+graph traversal, fixed-version policy and behavioral backport checks. The local
+test delegates to its API; it does not maintain a second resolver or RSA/brace
+regression suite. No unpublished package or local source fallback is required.
 
-`pnpm-workspace.yaml` is the explicit owner of patch paths and overrides. The
-frozen lockfile binds patch hashes. Lifecycle scripts stay disabled during
-installation; patch application must still be verified rather than inferred
-from directory names or a successful install.
+`pnpm-workspace.yaml` remains the sole package-manager configuration. Its
+overrides explicitly project the public package's `policy` export; the generic
+configuration CLI refuses workspace YAML and is not bypassed. After changes run
+`pnpm install --frozen-lockfile --ignore-scripts`, `pnpm test`, tools/application
+type checks and static generation in owner CI. The check traverses active
+dependencies; stale inactive store entries are not evidence of a selected patch.
 
-The mitigation tests resolve the exact patched versions named in the lockfile,
-then verify normal behavior and rejection of deeply nested/cyclic brace inputs
-and nested RSA AlgorithmIdentifier parameters. Stale patched cache directories
-cannot satisfy this selection. An independent snapshot installation must pass
-these tests, typecheck and static generation before publication.
+The original Learning patches and exact provenance remain under `patches/` and
+`third-party/patches.json`. Their SPDX/license notices are retained. These patches
+precede common tooling and remain valid inputs to its behavior tests; adopting the
+shared checker does not relicense their context or replace attribution.
 
-Retain patches and regression tests until an upstream update is reviewed through
-the repository's normal dependency PR flow. Test coverage establishes these
-specific mitigation cases, not the absence of all dependency vulnerabilities.
+Registry audit can still report underlying braces/node-forge releases despite
+reviewed backports. Run `pnpm audit --json` separately; specific regression cases
+are not proof of an advisory-free graph. Node runtime fixes are separate from
+registry dependencies. A fixed upstream dependency must be reviewed and pass this
+owner's real type/build tests before removing a patch.
 
-Redistributed patch context retains upstream terms and change attribution; see
-[third-party patch notices](../THIRD_PARTY_NOTICES.md). The recorded license and
-patch hashes are checked by the normal test suite.
+This tooling change does not update lesson evidence dates, perform source
+observations, select hosting or authorize website publication (parent #4).
