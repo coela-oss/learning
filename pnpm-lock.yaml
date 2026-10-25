@@ -5,7 +5,14 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@nuxt/devtools>simple-git': 4.0.2
+  simple-git: 4.0.2
+  '@simple-git/argv-parser': 2.0.1
+  esbuild: 0.28.2
+  undici@6: 6.29.1
+  undici@7: 7.30.1
+  undici@8: 8.12.2
+  serialize-javascript@7: 7.1.3
+  fast-uri@3: 3.1.9
 
 patchedDependencies:
   braces@3.0.3:
@@ -26,6 +33,9 @@ importers:
         specifier: 3.5.44
         version: 3.5.44(typescript@6.0.3)
     devDependencies:
+      '@nuxtjp/dependency-security':
+        specifier: 0.2.0
+        version: 0.2.0
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
@@ -538,6 +548,11 @@ packages:
       nuxt: ^4.6.2
       vite: ^8.3.4
 
+  '@nuxtjp/dependency-security@0.2.0':
+    resolution: {integrity: sha512-35113HWcx+uGuCb8EWJE5MT0hjuwxgl2nWwowLjmt/ZhRw6FX28ebJLtTtkp8/5Knt7J66Za136tmQW8u9dn7Q==}
+    engines: {node: '>=22.19.0'}
+    hasBin: true
+
   '@oxc-project/types@0.154.0':
     resolution: {integrity: sha512-KYOUGQFlLWR+s4QMV2Q9ko38TZm7EdO87Qm7rvZLqk/webse/cDjtyxKhg/47l0byCbs/k46LT8qc4PKjAikzA==}
 
@@ -897,7 +912,7 @@ packages:
     peerDependencies:
       '@unhead/cli': ^3.4.3
       '@vitejs/devtools-kit': ^0.7.6
-      esbuild: '>=0.17.0'
+      esbuild: 0.28.2
       lightningcss: '>=1.20.0'
       oxc-parser: '>=0.98.0'
       rolldown: '>=1.0.0'
@@ -2337,8 +2352,8 @@ packages:
     resolution: {integrity: sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==}
     engines: {node: '>= 18'}
 
-  serialize-javascript@7.1.2:
-    resolution: {integrity: sha512-GL2BWwVa6JydKO6l/ljVgjAZF4QJ3S7dWDWi53s5GZT8PJzD2fNxi67HANQGKAqPrwEpL5ba7gUBGi0Ls/sEoQ==}
+  serialize-javascript@7.1.3:
+    resolution: {integrity: sha512-kYEnegpAxWFjUw3dSYdSM9zVlTrsxDbsSkq/qd3B7VanqyJ+JdDy6qVyuqVGBhSfuD/rLZQEKuXsO5KZFCrVYQ==}
     engines: {node: '>=20.0.0'}
 
   seroval@1.6.9:
@@ -2641,7 +2656,7 @@ packages:
       '@rsbuild/core': '*'
       '@rspack/core': '*'
       bun-types-no-globals: '*'
-      esbuild: '*'
+      esbuild: 0.28.2
       rolldown: '*'
       rollup: '*'
       unloader: '*'
@@ -2830,7 +2845,7 @@ packages:
     peerDependencies:
       '@types/node': ^20.19.0 || >=22.12.0
       '@vitejs/devtools': ^0.7.1
-      esbuild: ^0.27.0 || ^0.28.0
+      esbuild: 0.28.2
       jiti: '>=1.21.0'
       less: ^4.0.0
       sass: ^1.70.0
@@ -3731,6 +3746,8 @@ snapshots:
       - rolldown
       - unplugin
 
+  '@nuxtjp/dependency-security@0.2.0': {}
+
   '@oxc-project/types@0.154.0': {}
 
   '@parcel/watcher-wasm@2.6.0':
@@ -3851,7 +3868,7 @@ snapshots:
 
   '@rollup/plugin-terser@1.0.0(rollup@4.64.7)':
     dependencies:
-      serialize-javascript: 7.1.2
+      serialize-javascript: 7.1.3
       smob: 1.6.2
       terser: 5.51.2
     optionalDependencies:
@@ -5612,7 +5629,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  serialize-javascript@7.1.2: {}
+  serialize-javascript@7.1.3: {}
 
   seroval@1.6.9: {}
 
