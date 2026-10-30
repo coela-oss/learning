@@ -19,7 +19,7 @@
     "observe:remove": "node scripts/observation-state.mts remove"
   },
   "dependencies": {
-    "nuxt": "4.6.2",
+    "nuxt": "4.6.3",
     "vue": "3.5.44"
   },
   "devDependencies": {
