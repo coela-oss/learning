@@ -34,8 +34,8 @@ importers:
         version: 3.5.44(typescript@6.0.3)
     devDependencies:
       '@nuxtjp/dependency-security':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.2.2
+        version: 0.2.2
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
@@ -548,8 +548,8 @@ packages:
       nuxt: ^4.6.2
       vite: ^8.3.4
 
-  '@nuxtjp/dependency-security@0.2.0':
-    resolution: {integrity: sha512-35113HWcx+uGuCb8EWJE5MT0hjuwxgl2nWwowLjmt/ZhRw6FX28ebJLtTtkp8/5Knt7J66Za136tmQW8u9dn7Q==}
+  '@nuxtjp/dependency-security@0.2.2':
+    resolution: {integrity: sha512-BG59MWj4NGE0UNCeUAqCUw/anGQKtjJXjWWlS+Ecc7ayhGTdRw0JEDIx9TXv9B/8oB5KPrARsQswcQ2XvUVPSw==}
     engines: {node: '>=22.19.0'}
     hasBin: true
 
@@ -3746,7 +3746,7 @@ snapshots:
       - rolldown
       - unplugin
 
-  '@nuxtjp/dependency-security@0.2.0': {}
+  '@nuxtjp/dependency-security@0.2.2': {}
 
   '@oxc-project/types@0.154.0': {}
 
